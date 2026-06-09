@@ -1,0 +1,42 @@
+{
+    "channel_names": {
+        "0": "microscopic"
+    },
+    "labels": {
+        "background": 0,
+        "f": 10,
+        "st": 11,
+        "ic": 12,
+        "och": 13,
+        "ac": 14,
+        "fr": 15,
+        "Hb": 16,
+        "TH": 17,
+        "MB": 18,
+        "HY": 19,
+        "CTX+": 1,
+        "P": 20,
+        "MY": 21,
+        "Cerebellum_AV": 22,
+        "Cerebellum_GL": 23,
+        "Cerebellum_ML": 24,
+        "V": 25,
+        "OB": 26,
+        "border": 27,
+        "cc+": 2,
+        "CPu": 3,
+        "DG": 4,
+        "HP": 5,
+        "RHP": 6,
+        "A": 7,
+        "ig": 8,
+        "fi": 9
+    },
+    "numTraining": 20,
+    "file_ending": ".nii.gz",
+    "name": "Mouse Brain Segmentation",
+    "reference": "",
+    "release": "0.0",
+    "licence": "",
+    "description": "Mouse Brain Segmentation"
+}

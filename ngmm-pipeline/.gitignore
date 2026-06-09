@@ -1,0 +1,26 @@
+# Personal path config (never commit real paths)
+config/paths.sh
+
+# Data files (too large for git — host on Zenodo / OSF)
+*.nrrd
+*.nii.gz
+*.vtk
+*.seg.nrrd
+
+# R outputs
+*.pdf
+Rplots.pdf
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+temp/
+*.log
