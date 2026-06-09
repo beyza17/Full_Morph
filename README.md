@@ -189,6 +189,8 @@ segmentation_predictions/
 
 Each `.seg.nrrd` file contains all segmented anatomical regions encoded as integer labels defined in `dataset.json`.
 
+<img src="thalamus.png" alt="Segmentation output" width="500"/>
+
 ---
 
 ## Stage 2 — Landmark Placement with ALPACA
@@ -291,6 +293,7 @@ alpaca_run/
 
 The script also writes `ALPACA_RMSE_summary.csv` with per-subject RMSE against any available ground-truth landmarks and total runtime.
 
+<img src="HP.png" alt="HP Region with landmarks on 3D Slicer Software" width="500"/>
 ---
 
 ## Stage 3 — Statistical Analysis in R
@@ -387,6 +390,7 @@ projections_out/
 ├── MATRIX_2_BEST_SEPARATION.pdf     ← All regions: best discriminating PCs
 └── MATRIX_2_SIGNIFICANT_HULLS.pdf   ← As above, with convex hulls for sig. regions
 ```
+<img src="statistics.png" alt="MATRIX_2_SIGNIFICANT_HULLS.pdf" width="500"/>
 
 ---
 
