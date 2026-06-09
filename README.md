@@ -70,7 +70,7 @@ ngmm-pipeline/
 ### Minimum Hardware
 | Component | Requirement |
 |-----------|-------------|
-| GPU | NVIDIA GPU with ≥ 8 GB VRAM (CUDA 11.3+) |
+| GPU | NVIDIA GPU with ≥ 8 GB VRAM (CUDA 11.8) |
 | RAM | ≥ 32 GB system RAM |
 | Storage | ≥ 50 GB free disk space |
 
@@ -80,12 +80,12 @@ ngmm-pipeline/
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| Python | 3.9+ | Stages 1 & 2 |
-| nnU-Net v2 | ≥ 2.2 | Segmentation |
-| 3D Slicer | 5.6+ | ALPACA landmark placement |
+| Python | 3.11.13 | Stages 1 & 2 |
+| nnU-Net v2 | 2.6.0 | Segmentation |
+| 3D Slicer | 5.10.0 | ALPACA landmark placement |
 | ALPACA (Slicer extension) | latest | Landmark registration |
-| R | ≥ 4.3 | Statistical analysis |
-| CUDA | 11.3.1 | GPU inference |
+| R | 4.5.2 | Statistical analysis |
+| CUDA | 11.8 | GPU inference |
 | Conda | any | Environment management |
 
 ---
@@ -138,16 +138,14 @@ The script `1_segmentation/run_segmentation.sh` runs a 4-step prediction pipelin
 
 ```bash
 # Create and activate the conda environment
-conda create -n env_ng python=3.9
+conda create -n env_ng python=3.11.13 pytorch==2.6.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 conda activate env_ng
-
-# Install nnU-Net v2
-pip install nnunetv2
+pip install -r path/to/ngmm-pipeline/docs/requirements.txt
 
 # Set nnU-Net environment variables (or add to your .bashrc)
-export nnUNet_raw=/path/to/dataset/nnUNet_raw_data
-export nnUNet_preprocessed=/path/to/dataset/nnUNet_preprocessed
-export nnUNet_results=/path/to/dataset/nnUNet_results
+export nnUNet_raw=/path/to/ngmm-pipeline/nnUNet_raw_data
+export nnUNet_preprocessed=/path/to/ngmm-pipeline/nnUNet_preprocessed
+export nnUNet_results=/path/to/ngmm-pipeline/nnUNet_results
 ```
 
 ### Input Data Requirements
