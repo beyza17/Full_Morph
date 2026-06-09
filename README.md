@@ -41,7 +41,7 @@ ngmm-pipeline/
 │   │   ├── Conversion_to_nrrd.py      ← Converts nnU-Net output → .seg.nrrd
 │   │   └── Remove_outside_voxels.py   ← Masks predictions to brain volume
 │   └── dataset.json                   ← nnU-Net label map (region names ↔ IDs)
-│   └── NG2561_Segments.seg.nrrd       ← template available at [HuggingFace link — [add here](https://huggingface.co/bzayim/Full_Morph/tree/main/NG2561_Segments.seg.nrrd)]
+│   └── NG2561_Segments.seg.nrrd       ← template available at [HuggingFace link — (https://huggingface.co/bzayim/Full_Morph/tree/main/NG2561_Segments.seg.nrrd)]
 │
 ├── 2_landmark_placement/              ← Stage 2: ALPACA in 3D Slicer
 │   ├── run_alpaca_pipeline.py         ← ALPACA multiprocess script (run inside Slicer)
@@ -424,7 +424,7 @@ The `dataset.json` file defines the mapping between integer labels in nnU-Net pr
 To reproduce the exact results from the paper:
 
 1. **Obtain the data** — request access to the dataset via [beyzayim17@gmail.com]
-2. **Download trained model weights** — available at [HuggingFace link — [add here](https://huggingface.co/bzayim/Full_Morph/tree/main/Dataset004_first)]
+2. **Download trained model weights** — available at [HuggingFace link — [here](https://huggingface.co/bzayim/Full_Morph/tree/main/Dataset004_first)]
 3. **Place "Dataset004_first" folder with model weights** in `/path/to/ngmm-pipeline/pipeline_data/nnUNet_results`
 4. **Configure paths** in `config/paths.sh`
 5. **Run all three stages** as described above
