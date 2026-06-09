@@ -461,7 +461,7 @@ If you use this pipeline in your research, please cite:
 ```bibtex
 @inproceedings{zayim2026segmentation,
   title     = {Automatic Segmentation for 3D Morphometric Analysis of the Mouse Brain},
-  author    = {Zayim, Beyza and ...},
+  author    = {Beyza Zayim, Emilia Skutunova, Taiabur Rahman, Nida Yardim, Salma Zarfaoui, Hanzala Daud, Alienor Vaudene,  Binnaz Yalcin,   Alain Lalande, Fabrice Meriaudeau1,  and StephanCollins },
   booktitle = {Proceedings of the International Conference on Pattern Recognition (ICPR)},
   year      = {2026}
 }
