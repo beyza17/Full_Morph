@@ -16,7 +16,7 @@ All sample IDs follow the pattern `NG{NNNN}` (e.g., `NG4975`).
 ## Directory Layout (complete)
 
 ```
-pipeline_data/
+pipeline_data/ (create the folder under "ngmm-pipeline" folder)
 │
 ├── processed_files_3/                ← Stage 1 INPUT
 │   ├── NG4975_RCL5_masked.nrrd

@@ -1,7 +1,7 @@
-# Personal path config (never commit real paths)
+# Personal path config 
 config/paths.sh
 
-# Data files (too large for git — host on Zenodo / OSF)
+# Data files 
 *.nrrd
 *.nii.gz
 *.vtk
