@@ -41,7 +41,7 @@ ngmm-pipeline/
 │   │   ├── Conversion_to_nrrd.py      ← Converts nnU-Net output → .seg.nrrd
 │   │   └── Remove_outside_voxels.py   ← Masks predictions to brain volume
 │   └── dataset.json                   ← nnU-Net label map (region names ↔ IDs)
-│   └── NG2561_Segments.seg.nrrd       ← template available at [HuggingFace link — (https://huggingface.co/bzayim/Full_Morph/tree/main/NG2561_Segments.seg.nrrd)]
+│   └── NG2561_Segments.seg.nrrd       ← template of label order for saving predicted output of nnU-Net
 │
 ├── 2_landmark_placement/              ← Stage 2: ALPACA in 3D Slicer
 │   ├── run_alpaca_pipeline.py         ← ALPACA multiprocess script (run inside Slicer)
@@ -107,7 +107,7 @@ conda activate env_ng
 pip install nnunetv2
 
 # 4. Run the full segmentation pipeline
-bash 1_segmentation/run_segmentation.sh [OPTIONAL: NG4975 NG4976 ...]
+bash 1_segmentation/run_segmentation.sh #[OPTIONAL: NG4975 NG4976 ...]
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
 python 2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py
