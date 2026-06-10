@@ -168,7 +168,7 @@ python "${SOURCE_DIR}/prediction/Conversion_to_nrrd.py" \
     --input_dir "$OUTPUT" \
     --output_dir "$SEGMENTATION_OUTPUT_DIR" \
     --original_folder "$CONVERTED_FILE_PATH" \
-    --example_seg_path "${SOURCE_DIR}/NG2561_Segments.seg.nrrd"
+    --example_seg_path "${SOURCE_DIR}/NG4990_Segments.seg.nrrd"
 
 STEP4_END=$(date +%s); STEP_TIMES["Step 4"]=$((STEP4_END - STEP4_START))
 echo "  Finished at: $(date '+%H:%M:%S')  |  Duration: $(format_duration ${STEP_TIMES["Step 4"]})"

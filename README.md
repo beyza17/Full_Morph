@@ -41,7 +41,7 @@ ngmm-pipeline/
 │   │   ├── Conversion_to_nrrd.py      ← Converts nnU-Net output → .seg.nrrd
 │   │   └── Remove_outside_voxels.py   ← Masks predictions to brain volume
 │   └── dataset.json                   ← nnU-Net label map (region names ↔ IDs)
-│   └── NG2561_Segments.seg.nrrd       ← template of label order for saving predicted output of nnU-Net
+│   └── NG4990_Segments.seg.nrrd       ← template of label order for saving predicted output of nnU-Net
 │
 ├── 2_landmark_placement/              ← Stage 2: ALPACA in 3D Slicer
 │   ├── run_alpaca_pipeline.py         ← ALPACA multiprocess script (run inside Slicer)
