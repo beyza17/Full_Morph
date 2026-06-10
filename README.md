@@ -10,6 +10,15 @@ This repository provides a fully reproducible three-stage pipeline for automated
 3. **Statistical Analysis** — Geometric Morphometrics (GPA + PCA + ANOVA + LDA) in R
 
 ---
+## Pipeline Execution Benchmarks
+
+The table below outlines the average processing time required for each stage of the pipeline. 
+
+| Stage | Process | Core Tool / Environment | Avg. Time (Per Sample)* |
+| :--- | :--- | :--- | :--- |
+| **1. Segmentation** | Automated ROI mask generation from `.nrrd` volumes | nnU-Net (Python / PyTorch) | ~7.5 min |
+| **2. Landmark Placement** | Point-cloud registration & landmark transfer | ALPACA (SlicerMorph / C++) | ~1 hour 20 min |
+| **3. Statistical Analysis** | Shape analysis (GPA, PCA, ANOVA, LDA) | R Spatial/Morpho Packages | < 5 seconds (Batch total) |
 
 ## Table of Contents
 
@@ -111,12 +120,19 @@ bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output
 bash 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section)
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
-python 2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py
+python /path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py # Must be run inside 3D Slicer's Python environment
 
 # 6. Run ALPACA inside 3D Slicer (see Stage 2)
+cd /path/to/ngmm-pipeline/2_landmark_placement
+huggingface-cli download bzayim/Full_Morph   --include "template_landmarks/**"   --local-dir .
+huggingface-cli download bzayim/Full_Morph   --include "template_model/**"   --local-dir .
+python /path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py # Must be run inside 3D Slicer's Python environment
 
-# 7. Run the R analysis (see Stage 3)
-Rscript 3_morphometrics/gpa_pca_analysis.R
+# 7. Organizing output datas of ALPACA for R analysis (see Stage 3)
+python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py
+
+# 8. Run the R analysis (see Stage 3)
+Rscript /path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R
 ```
 
 ---

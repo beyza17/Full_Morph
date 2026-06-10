@@ -33,7 +33,7 @@ import vtk
 # =============================================================
 
 INPUT_FOLDER  = "/path/to/ngmm-pipeline/pipeline_data/segmentation_predictions"
-OUTPUT_FOLDER = "/path/to/ngmm-pipeline/pipeline_data/target_models"
+OUTPUT_FOLDER = "/path/to/ngmm-pipeline/2_landmark_placement/target_models"
 
 # =============================================================
 # END OF CONFIGURATION

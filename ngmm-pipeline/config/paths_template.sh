@@ -44,5 +44,5 @@ ALPACA_OUTPUT_DIR="${REPO_ROOT}/pipeline_data/alpaca_run/output"
 
 # ── Stage 3: R analysis ───────────────────────────────────────
 # Reads directly from ALPACA output — no separate copy needed
-R_INPUT_ROOT="${REPO_ROOT}/pipeline_data/alpaca_run/output"
+R_INPUT_ROOT="${REPO_ROOT}/3_morphometrics/input"
 R_OUTPUT_DIR="${REPO_ROOT}/3_morphometrics/output"

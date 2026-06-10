@@ -31,13 +31,13 @@ PIPELINE_START_TIME = time.time()
 BASE        = "/path/to/2_landmark_placement"
 OUTPUT_ROOT = "/path/to/2_landmark_placement/output"
 CSV_OUT_DIR = "/path/to/2_landmark_placement/output"
-
+os.makedirs(OUTPUT_ROOT, exist_ok=True)
 # Set to None to auto-discover all region folders under BASE/target_models/
 # Or explicitly list regions to process, e.g. ["DG", "HP", "CC"]
 REGIONS = None
 
 # Whether to evaluate against ground-truth landmarks (set False if you have none)
-EVALUATE = True
+EVALUATE = False
 
 # ==========================================================
 # 2. ALPACA PARAMETERS
@@ -142,41 +142,6 @@ for REGION in regions_to_run:
     # ── Evaluation (optional) ───────────────────────────────
     estimates_dir = os.path.join(out_dir, "individualEstimates")
     rmse_scores = []
-
-    if EVALUATE:
-        for f in sorted(os.listdir(tgt_model_dir)):
-            if not f.lower().endswith(".vtk"):
-                continue
-
-            subject_id  = f.split("_")[0]
-            target_base = os.path.splitext(f)[0]
-
-            pred_path = find_file_by_prefix(estimates_dir, target_base)
-            gt_path   = find_file_by_prefix(gt_lm_dir, subject_id)
-
-            if not pred_path:
-                all_csv_rows.append([REGION, subject_id, "Pred Missing", "", ""])
-                continue
-            if not gt_path:
-                all_csv_rows.append([REGION, subject_id, "GT Missing", "", ""])
-                continue
-
-            pred_pts = load_mrk_json(pred_path)
-            gt_pts   = load_mrk_json(gt_path)
-
-            if pred_pts is None or gt_pts is None:
-                all_csv_rows.append([REGION, subject_id, "Read Error", "", ""])
-                continue
-            if len(pred_pts) != len(gt_pts):
-                all_csv_rows.append([REGION, subject_id, "Count Mismatch", "", ""])
-                continue
-
-            err = rmse(pred_pts, gt_pts)
-            rmse_scores.append(err)
-            all_csv_rows.append([REGION, subject_id, "Success", f"{err:.6f}", ""])
-
-        if rmse_scores:
-            print(f"  Average RMSE: {np.mean(rmse_scores):.4f} mm  |  Std: {np.std(rmse_scores):.4f} mm")
 
     all_csv_rows.append([REGION, "__REGION_TOTAL__", "Runtime", "", f"{region_runtime:.2f}"])
 

@@ -13,10 +13,12 @@
 # root_dir: reads from environment variable set in config/paths.sh
 # If running interactively in RStudio, set REPO_ROOT manually below:
 # Sys.setenv(REPO_ROOT = "/path/to/ngmm-pipeline")
-root_dir <- file.path(Sys.getenv("REPO_ROOT"), "2_landmark_placement/output")
-if (root_dir == "/2_landmark_placement/output") {
-  stop("REPO_ROOT is not set. See config/paths_template.sh or set it above.")
+repo_root <- Sys.getenv("REPO_ROOT")
+if (nchar(repo_root) == 0) {
+  stop("REPO_ROOT is not set. See config/paths_template.sh or set it with Sys.setenv().")
 }
+
+
 # -------------------------------
 # 0. Dependencies
 # -------------------------------
@@ -45,14 +47,15 @@ library(RRPP)
 # (i.e. the output directory from Stage 2 ALPACA, reorganised by region)
 #
 # Expected structure:
-#   root_dir/
-#   ├── DG/
-#   │   ├── NG4975_RCL5_DG_template.mrk.json
+#   3_morphometrics/input/
+#   ├── A/
+#   │   ├── NG2561_A_NG4990_A.mrk.json
 #   │   └── ...
 #   ├── HP/
 #   └── ...
-root_dir   <- file.path(Sys.getenv("REPO_ROOT"), "pipeline_data/alpaca_run/output")
-output_dir <- file.path(Sys.getenv("REPO_ROOT"), "3_morphometrics/output")
+root_dir   <- file.path(repo_root, "3_morphometrics/input")
+output_dir <- file.path(repo_root, "3_morphometrics/output")
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 # Genotype table — add one row per sample ID in your dataset
 # Supported genotype labels: "WT", "HOM", "IT"
 geno_table <- tribble(
