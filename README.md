@@ -150,6 +150,12 @@ export nnUNet_results=/path/to/ngmm-pipeline/nnUNet_results
 
 ### Input Data Requirements
 
+Create input folder with the bash command of:
+
+```bash
+bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/processed_files_3
+```
+
 Place your raw MRI volumes in the `processed_files_3/` folder. Each sample must have a file matching the pattern:
 
 ```
