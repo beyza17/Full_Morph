@@ -212,7 +212,7 @@ segmentation_predictions/
 
 Each `.seg.nrrd` file contains all segmented anatomical regions encoded as integer labels defined in `dataset.json`.
 
-<img src="thalamus.png" alt="Segmentation output" width="500"/>
+<img src="thalamus.png" alt="Segmentation prediction output of nnU-Net visualized on 3D Slicer software" width="500"/>
 
 ---
 
