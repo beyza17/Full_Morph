@@ -20,7 +20,7 @@ This repository provides a fully reproducible three-stage pipeline for automated
 - [Stage 2 — Landmark Placement with ALPACA](#stage-2--landmark-placement-with-alpaca)
 - [Stage 3 — Statistical Analysis in R](#stage-3--statistical-analysis-in-r)
 - [Data Format Reference](#data-format-reference)
-- [Reproducing Paper Results](#reproducing-paper-results)
+- [Reproducing Paper Results](#reproducing-paper-results) 
 - [Troubleshooting](#troubleshooting)
 - [Citation](#citation)
 
@@ -108,7 +108,7 @@ pip install -r path/to/ngmm-pipeline/docs/requirements.txt
 
 # 4. Run the full segmentation pipeline
 bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output folder
-bash 1_segmentation/run_segmentation.sh 
+bash 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section)
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
 python 2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py
@@ -437,7 +437,14 @@ To reproduce the exact results from the paper:
 1. **Obtain the data** — request access to the dataset via [beyzayim17@gmail.com]
 2. **Download trained model weights** — available at [HuggingFace link — [here](https://huggingface.co/bzayim/Full_Morph/tree/main/Dataset004_first)]
 3. **Place "Dataset004_first" folder with model weights** in `/path/to/ngmm-pipeline/pipeline_data/nnUNet_results`
-4. **Configure paths** in `config/paths.sh`
+
+```bash
+bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/nnUNet_results
+cd /path/to/ngmm-pipeline/pipeline_data/nnUNet_results
+huggingface-cli download bzayim/Full_Morph   --include "Dataset004_first/nnUNetTrainer__nnUNetPlans__3d_fullres/**"   --local-dir .
+```
+
+4. **Configure paths** in `ngmm-pipeline\config\paths_template.sh`
 5. **Run all three stages** as described above
 
 > All random seeds are fixed. RRPP permutation tests use `iter = 999`. LDA permutation uses `n_perm = 1000`.
