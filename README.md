@@ -102,9 +102,9 @@ cp config/paths_template.sh config/paths.sh
 nano config/paths.sh          # Edit all paths to match your system
 
 # 3. Set up the Python environment (see Stage 1 setup below)
-conda create -n env_ng python=3.9
+conda create -n env_ng python=3.11.13 pytorch==2.6.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 conda activate env_ng
-pip install nnunetv2
+pip install -r path/to/ngmm-pipeline/docs/requirements.txt
 
 # 4. Run the full segmentation pipeline
 bash 1_segmentation/run_segmentation.sh #[OPTIONAL: NG4975 NG4976 ...]
