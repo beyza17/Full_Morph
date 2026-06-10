@@ -29,7 +29,7 @@ This repository provides a fully reproducible three-stage pipeline for automated
 ## Repository Structure
 
 ```
-ngmm-pipeline/
+Full_Morph/ngmm-pipeline/
 │
 ├── README.md                          ← This file
 │
@@ -95,7 +95,7 @@ ngmm-pipeline/
 ```bash
 # 1. Clone this repository
 git clone https://github.com/YOUR_USERNAME/ngmm-pipeline.git
-cd ngmm-pipeline
+cd Full_Morph/ngmm-pipeline
 
 # 2. Configure your paths
 cp config/paths_template.sh config/paths.sh
@@ -107,7 +107,8 @@ conda activate env_ng
 pip install -r path/to/ngmm-pipeline/docs/requirements.txt
 
 # 4. Run the full segmentation pipeline
-bash 1_segmentation/run_segmentation.sh #[OPTIONAL: NG4975 NG4976 ...]
+bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output folder
+bash 1_segmentation/run_segmentation.sh 
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
 python 2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py

@@ -1,4 +1,6 @@
 #!/bin/bash
+#$ -o /path/to/ngmm-pipeline/pipeline_data/logger/output.txt
+
 # =============================================================
 # run_segmentation.sh
 # Full nnU-Net inference pipeline for mouse brain segmentation
@@ -35,8 +37,8 @@ end_step() {
 }
 
 # ── Load configuration ────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG="${SCRIPT_DIR}/../config/paths_template.sh"
+SCRIPT_DIR="path/to/ngmm-pipeline/1_segmentation"
+CONFIG="path/to/ngmm-pipeline/config/paths_template.sh"
 
 if [ ! -f "$CONFIG" ]; then
     echo "[ERROR] Config file not found: $CONFIG"
