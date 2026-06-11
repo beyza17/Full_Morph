@@ -70,6 +70,8 @@ Full_Morph/ngmm-pipeline/
 └── docs/
     ├── data_format.md                 ← File naming conventions and format specs
     └── environment_setup.md           ← Detailed environment setup instructions
+    └── requirements.txt               ← Requirements for segmentation stage
+    └── alpaca_requirements.txt        ← Requirements for 3D Slicer
 ```
 
 ---
