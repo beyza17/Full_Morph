@@ -448,7 +448,7 @@ The `dataset.json` file defines the mapping between integer labels in nnU-Net pr
 
 To reproduce the exact results from the paper:
 
-1. **Obtain the data** — request access to the dataset via [beyzayim17@gmail.com]
+1. **Obtain the data** — request access to the dataset via [beyzayim17@gmail.com], check "Input Data Requirements" section
 2. **Download trained model weights** — available at [HuggingFace link — [here](https://huggingface.co/bzayim/Full_Morph/tree/main/Dataset004_first)]
 3. **Place "Dataset004_first" folder with model weights** in `/path/to/ngmm-pipeline/pipeline_data/nnUNet_results`
 
