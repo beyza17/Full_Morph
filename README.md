@@ -103,7 +103,7 @@ Full_Morph/ngmm-pipeline/
 
 ```bash
 # 1. Clone this repository
-git clone https://github.com/YOUR_USERNAME/ngmm-pipeline.git
+git clone https://github.com/beyza17/Full_Morph.git
 cd Full_Morph/ngmm-pipeline
 
 # 2. Configure your paths
