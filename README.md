@@ -107,8 +107,7 @@ git clone https://github.com/beyza17/Full_Morph.git
 cd Full_Morph/ngmm-pipeline
 
 # 2. Configure your paths
-cp config/paths_template.sh config/paths.sh
-nano config/paths.sh          # Edit all paths to match your system
+cp config/paths_template.sh 
 
 # 3. Set up the Python environment (see Stage 1 setup below)
 conda create -n env_ng python=3.11.13 pytorch==2.6.0 pytorch-cuda=11.8 -c pytorch -c nvidia
