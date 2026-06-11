@@ -5,7 +5,7 @@
 # Must be run inside 3D Slicer's Python environment:
 #   1. Open 3D Slicer
 #   2. View → Python Interactor
-#   3. exec(open("/path/to/run_alpaca_pipeline.py").read())
+#   3. exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read())
 # ==========================================================
 
 import os
@@ -28,9 +28,9 @@ PIPELINE_START_TIME = time.time()
 # 1. PATH CONFIGURATION — edit these to match your system
 # ==========================================================
 
-BASE        = "/path/to/2_landmark_placement"
-OUTPUT_ROOT = "/path/to/2_landmark_placement/output"
-CSV_OUT_DIR = "/path/to/2_landmark_placement/output"
+BASE = "/path/to/2_landmark_placement" # edit
+OUTPUT_ROOT = os.path.join(BASE, "output")
+CSV_OUT_DIR = os.path.join(BASE, "output")
 os.makedirs(OUTPUT_ROOT, exist_ok=True)
 # Set to None to auto-discover all region folders under BASE/target_models/
 # Or explicitly list regions to process, e.g. ["DG", "HP", "CC"]

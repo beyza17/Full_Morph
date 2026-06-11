@@ -37,10 +37,10 @@ TEMPLATE_MODEL_DIR="${REPO_ROOT}/2_landmark_placement/template_model"
 TEMPLATE_LM_DIR="${REPO_ROOT}/2_landmark_placement/template_landmarks"
 
 # Per-region VTK surfaces (generated from .seg.nrrd, gitignored)
-TARGET_MODELS_DIR="${REPO_ROOT}/pipeline_data/target_models"
+TARGET_MODELS_DIR="${REPO_ROOT}/2_landmark_placement/target_models"
 
 # ALPACA prediction outputs (gitignored)
-ALPACA_OUTPUT_DIR="${REPO_ROOT}/pipeline_data/alpaca_run/output"
+ALPACA_OUTPUT_DIR="${REPO_ROOT}/2_landmark_placement/output"
 
 # ── Stage 3: R analysis ───────────────────────────────────────
 # Reads directly from ALPACA output — no separate copy needed

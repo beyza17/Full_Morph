@@ -26,7 +26,7 @@
 #   python 2_landmark_placement/prepare_r_input.py
 #   Or with explicit paths:
 #   python 2_landmark_placement/prepare_r_input.py \
-#       --input  /path/to/ngmm-pipeline/pipeline_data/alpaca_run/output \
+#       --input  /path/to/2_landmark_placement/output \
 #       --output /path/to/ngmm-pipeline/3_morphometrics/input
 # =============================================================
 
@@ -37,8 +37,8 @@ import argparse
 # =============================================================
 # CONFIGURATION — edit if not using command-line arguments
 # =============================================================
-DEFAULT_INPUT  = "/path/to/2_landmark_placement/output"
-DEFAULT_OUTPUT = "/path/to/ngmm-pipeline/3_morphometrics/input"
+DEFAULT_INPUT  = "/path/to/2_landmark_placement/output" # edit
+DEFAULT_OUTPUT = "/path/to/ngmm-pipeline/3_morphometrics/input" # edit
 os.makedirs(DEFAULT_OUTPUT, exist_ok=True)
 # =============================================================
 

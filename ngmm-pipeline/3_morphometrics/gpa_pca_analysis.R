@@ -10,14 +10,6 @@
 #         (output of Stage 2 ALPACA)
 # Output: Statistics, PCA scores, and matrix PDFs saved to root_dir
 # =============================================================
-# root_dir: reads from environment variable set in config/paths.sh
-# If running interactively in RStudio, set REPO_ROOT manually below:
-# Sys.setenv(REPO_ROOT = "/path/to/ngmm-pipeline")
-repo_root <- Sys.getenv("REPO_ROOT")
-if (nchar(repo_root) == 0) {
-  stop("REPO_ROOT is not set. See config/paths_template.sh or set it with Sys.setenv().")
-}
-
 
 # -------------------------------
 # 0. Dependencies
@@ -53,8 +45,10 @@ library(RRPP)
 #   │   └── ...
 #   ├── HP/
 #   └── ...
-root_dir   <- file.path(repo_root, "3_morphometrics/input")
-output_dir <- file.path(repo_root, "3_morphometrics/output")
+
+root_dir <- "/path/to/3_morphometrics/input"
+output_dir <- "/path/to/3_morphometrics/output"
+
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 # Genotype table — add one row per sample ID in your dataset
 # Supported genotype labels: "WT", "HOM", "IT"

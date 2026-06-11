@@ -32,8 +32,8 @@ import vtk
 # CONFIGURATION — edit these two paths to match your system
 # =============================================================
 
-INPUT_FOLDER  = "/path/to/ngmm-pipeline/pipeline_data/segmentation_predictions"
-OUTPUT_FOLDER = "/path/to/ngmm-pipeline/2_landmark_placement/target_models"
+INPUT_FOLDER  = "/path/to/ngmm-pipeline/pipeline_data/segmentation_predictions" # edit
+OUTPUT_FOLDER = "/path/to/ngmm-pipeline/2_landmark_placement/target_models" # edit
 
 # =============================================================
 # END OF CONFIGURATION

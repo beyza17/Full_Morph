@@ -17,7 +17,7 @@ The table below outlines the average processing time required for each stage of 
 | Stage | Process | Core Tool / Environment | Avg. Time (Per Sample)* |
 | :--- | :--- | :--- | :--- |
 | **1. Segmentation** | Automated ROI mask generation from `.nrrd` volumes | nnU-Net (Python / PyTorch) | ~7.5 min |
-| **2. Landmark Placement** | Point-cloud registration & landmark transfer | ALPACA (SlicerMorph / C++) | ~1 hour 20 min |
+| **2. Landmark Placement** | Point-cloud registration & landmark transfer | ALPACA (SlicerMorph) | ~1 hour 20 min |
 | **3. Statistical Analysis** | Shape analysis (GPA, PCA, ANOVA, LDA) | R Spatial/Morpho Packages | < 5 seconds (Batch total) |
 
 ## Table of Contents
@@ -116,11 +116,11 @@ module load gcc/11.2.0
 pip install -r path/to/ngmm-pipeline/docs/requirements.txt
 
 # 4. Run the full segmentation pipeline
-bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output folder
-bash 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section), also it needs GPU 
+mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output folder
+1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section), also it needs GPU 
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
-python /path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py # Must be run inside 3D Slicer's Python environment
+python /path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment
 
 # 6. Run ALPACA inside 3D Slicer (see Stage 2)
 cd /path/to/ngmm-pipeline/2_landmark_placement
@@ -129,10 +129,10 @@ huggingface-cli download bzayim/Full_Morph   --include "template_model/**"   --l
 python /path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py # Must be run inside 3D Slicer's Python environment
 
 # 7. Organizing output datas of ALPACA for R analysis (see Stage 3)
-python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py
+exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read()) # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment
 
-# 8. Run the R analysis (see Stage 3)
-Rscript /path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R
+# 8. Run the R analysis in R termınal(see Stage 3)
+source("/path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R") # Edit paths inside of the file.
 ```
 
 ---
@@ -170,7 +170,7 @@ export nnUNet_results=/path/to/ngmm-pipeline/nnUNet_results
 Create input folder with the bash command of:
 
 ```bash
-bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/processed_files_3
+mkdir -p /path/to/ngmm-pipeline/pipeline_data/processed_files_3
 ```
 
 Place your raw HREM volumes in the `processed_files_3/` folder. Each sample must have a file matching the pattern:
@@ -191,10 +191,10 @@ processed_files_3/
 
 ```bash
 # Option A: Process all new samples automatically (skips already-processed ones)
-bash 1_segmentation/run_segmentation.sh
+1_segmentation/run_segmentation.sh
 
 # Option B: Process specific samples by name
-bash 1_segmentation/run_segmentation.sh NG4975 NG4976 NG4977
+1_segmentation/run_segmentation.sh NG4975 NG4976 NG4977
 ```
 
 The script automatically detects which sample IDs already have outputs in `output_dir/` and skips them — making it safe to re-run incrementally.
@@ -247,12 +247,15 @@ target_models/
     └── ...
 ```
 
-Run:
+Must be run inside 3D Slicer's Python environment:
 ```bash
-python 2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py \
-    --input_dir /path/to/segmentation_predictions/ \
-    --output_dir /path/to/target_models/ \
-    --label_map 1_segmentation/dataset.json
+exec(open("/path/to/seg_nrrd_to_vtk.py").read())
+```
+
+If you see package error, install required package based on "ngmm-pipeline/docs/alpaca_requirements.txt" for Python version 3.12.10. You can install by using this command:
+
+```python
+slicer.util.pip_install("package_name")
 ```
 
 > **How it works:** The script reads `dataset.json` to map integer label IDs to region names (e.g., label `3` → `"DG"`), then marching-cubes extracts each label as a `.vtk` surface mesh and saves it to `{REGION_NAME}/{SAMPLE_ID}_{REGION_NAME}.vtk`.
@@ -262,9 +265,9 @@ python 2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py \
 ALPACA must be run inside the 3D Slicer Python environment.
 
 **Prerequisites:**
-1. Install [3D Slicer 5.6+](https://download.slicer.org/)
-2. Install the **SlicerMorph** extension (includes ALPACA) via Slicer's Extension Manager
-3. Prepare one template per region in `template_model/{REGION}/` and `template_landmarks/{REGION}/`
+1. Install [3D Slicer 5.10.0](https://download.slicer.org/)
+2. Install the **SlicerMorph** extension (includes ALPACA) via Slicer's Extension Manager → Restart Slicer
+3. Prepare one template per region in `path/to/2_landmark_placement/template_model/{REGION}/` and `path/to/2_landmark_placement/template_landmarks/{REGION}/`. Check Quick Start 6th title.
 
 **Running the script:**
 
@@ -276,12 +279,16 @@ ALPACA must be run inside the 3D Slicer Python environment.
 exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read())
 ```
 
-Or use the Slicer scripted module runner.
+If you see package error install packages in "ngmm-pipeline/docs/alpaca_requirements.txt" for Python version 3.12.10. You can install by using this command:
+
+```python
+slicer.util.pip_install("-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt")
+```
 
 **Key parameters** (edit at top of `run_alpaca_pipeline.py`):
 
 ```python
-BASE   = "/path/to/alpaca_run"      # Root directory
+BASE   = "/path/to/2_landmark_placement"      # Root directory
 REGION = "DG"                        # Region to process (or loop over regions)
 ```
 
@@ -380,10 +387,8 @@ Supported genotype labels: `WT` (wild-type), `HOM` (homozygous), `IT` (heterozyg
 
 ```bash
 # Edit the root_dir path at the top of the script first
-Rscript 3_morphometrics/gpa_pca_analysis.R
+source("/path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R")
 ```
-
-Or interactively in RStudio — open the script and run all (`Ctrl+Alt+R`).
 
 ### Expected Outputs
 
