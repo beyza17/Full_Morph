@@ -5,7 +5,7 @@
 
 This repository provides a fully reproducible three-stage pipeline for automated 3D morphometric analysis of the mouse brain:
 
-1. **Segmentation** — nnU-Net predicts anatomical regions from `.nrrd` MRI volumes
+1. **Segmentation** — nnU-Net predicts anatomical regions from `.nrrd` HREM (High Resolution Episcopic Microscopy) volumes
 2. **Landmark Placement** — ALPACA registers template landmarks onto each segmented region
 3. **Statistical Analysis** — Geometric Morphometrics (GPA + PCA + ANOVA + LDA) in R
 
@@ -173,7 +173,7 @@ Create input folder with the bash command of:
 bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/processed_files_3
 ```
 
-Place your raw MRI volumes in the `processed_files_3/` folder. Each sample must have a file matching the pattern:
+Place your raw HREM volumes in the `processed_files_3/` folder. Each sample must have a file matching the pattern:
 
 ```
 {SAMPLE_ID}_RCL5_masked.nrrd
@@ -423,7 +423,7 @@ projections_out/
 
 | Stage | File | Naming Pattern | Example |
 |-------|------|----------------|---------|
-| Input MRI | `.nrrd` | `{ID}_RCL5_masked.nrrd` | `NG4975_RCL5_masked.nrrd` |
+| Input HREM | `.nrrd` | `{ID}_RCL5_masked.nrrd` | `NG4975_RCL5_masked.nrrd` |
 | Segmentation | `.seg.nrrd` | `{ID}_RCL5.seg.nrrd` | `NG4975_RCL5.seg.nrrd` |
 | Surface mesh | `.vtk` | `{ID}_{REGION}.vtk` | `NG4975_DG.vtk` |
 | Landmarks (pred) | `.mrk.json` | `{ID}_RCL5_{REGION}_template.mrk.json` | `NG4975_RCL5_DG_template.mrk.json` |
