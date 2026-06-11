@@ -96,6 +96,7 @@ Full_Morph/ngmm-pipeline/
 | R | 4.5.2 | Statistical analysis |
 | CUDA | 11.8 | GPU inference |
 | Conda | any | Environment management |
+| GCC | 11.2.0 | C/C++ compilation |
 
 ---
 
@@ -111,11 +112,12 @@ cd Full_Morph/ngmm-pipeline
 # 3. Set up the Python environment (see Stage 1 setup below)
 conda create -n env_ng python=3.11.13 pytorch==2.6.0 pytorch-cuda=11.8 -c pytorch -c nvidia
 conda activate env_ng
+module load gcc/11.2.0
 pip install -r path/to/ngmm-pipeline/docs/requirements.txt
 
 # 4. Run the full segmentation pipeline
 bash mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output folder
-bash 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section)
+bash 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section), also it needs GPU 
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
 python /path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py # Must be run inside 3D Slicer's Python environment

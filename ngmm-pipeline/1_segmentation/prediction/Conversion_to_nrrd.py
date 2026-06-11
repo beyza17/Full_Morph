@@ -4,9 +4,7 @@ import SimpleITK as sitk
 import nrrd
 from pathlib import Path
 from helper import (
-    print_nrrd_header_info,
     read_and_display_json,
-    convert_nifti_to_seg_nrrd,
     process_all_volumes
 )
 

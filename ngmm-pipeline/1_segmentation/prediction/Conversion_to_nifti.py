@@ -3,7 +3,6 @@ import nibabel as nib
 import numpy as np
 import argparse
 from pathlib import Path
-import shutil
 import nrrd
 def convert_nrrd_to_nifti(nrrd_file_path, nifti_file_path):
     # Read the NRRD file

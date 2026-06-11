@@ -1,9 +1,6 @@
 import os
-import nibabel as nib
-import numpy as np
 import argparse
 from pathlib import Path
-import shutil
 import SimpleITK as sitk
 
 def main(volume_dir, seg_dir,output_path):
