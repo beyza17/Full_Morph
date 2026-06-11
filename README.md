@@ -94,7 +94,7 @@ Full_Morph/ngmm-pipeline/
 | Python | 3.11.13 | Stages 1 & 2 |
 | nnU-Net v2 | 2.6.0 | Segmentation |
 | 3D Slicer | 5.10.0 | ALPACA landmark placement |
-| ALPACA (Slicer extension) | latest | Landmark registration |
+| SlicerMorph (Slicer extension) | latest | Landmark registration |
 | R | 4.5.2 | Statistical analysis |
 | CUDA | 11.8 | GPU inference |
 | Conda | any | Environment management |
