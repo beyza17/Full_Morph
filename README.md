@@ -124,16 +124,18 @@ mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output fold
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
 python /path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment
 
-# 6. Run ALPACA inside 3D Slicer (see Stage 2)
+# 6. Prepare template data for ALPACA (see Stage 2)
 cd /path/to/ngmm-pipeline/2_landmark_placement
 huggingface-cli download bzayim/Full_Morph   --include "template_landmarks/**"   --local-dir .
 huggingface-cli download bzayim/Full_Morph   --include "template_model/**"   --local-dir .
+
+# 7. Run ALPACA inside 3D Slicer
 exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read()) # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment
 
-# 7. Organizing output datas of ALPACA for R analysis (see Stage 3)
+# 8. Organizing output datas of ALPACA for R analysis (see Stage 3)
 python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py # Edit paths inside of the file.
 
-# 8. Run the R analysis in R terminal(see Stage 3)
+# 9. Run the R analysis in R terminal(see Stage 3)
 source("/path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R") # Edit paths inside of the file.
 ```
 
