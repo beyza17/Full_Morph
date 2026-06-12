@@ -129,7 +129,7 @@ cd /path/to/ngmm-pipeline/2_landmark_placement
 huggingface-cli download bzayim/Full_Morph   --include "template_landmarks/**"   --local-dir .
 huggingface-cli download bzayim/Full_Morph   --include "template_model/**"   --local-dir .
 
-# 7. Run ALPACA inside 3D Slicer
+# 7. Run ALPACA inside 3D Slicer (It needs SlicerMorph extension, see Stage 2)
 exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read()) # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment
 
 # 8. Organizing output datas of ALPACA for R analysis (see Stage 3)
