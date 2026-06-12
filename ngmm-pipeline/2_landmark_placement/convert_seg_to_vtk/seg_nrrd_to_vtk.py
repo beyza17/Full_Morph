@@ -6,7 +6,7 @@
 # Must be run inside 3D Slicer's Python environment:
 #   1. Open 3D Slicer
 #   2. View → Python Interactor
-#   3. Copy full script and paste to Python console
+#   3. exec(open("/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py").read())
 #
 # Input structure:
 #   pipeline_data/segmentation_predictions/

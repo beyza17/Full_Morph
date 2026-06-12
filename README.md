@@ -122,7 +122,8 @@ mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output fold
 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section), also it needs GPU 
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
-python /path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment. Copy the scipt and paste to Python console.
+exec(open("/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py").read())
+# Edit paths inside of the file. Must be run inside 3D Slicer's Python environment. 
 
 # 6. Prepare template data for ALPACA (see Stage 2)
 cd /path/to/ngmm-pipeline/2_landmark_placement
