@@ -513,4 +513,4 @@ This project is licensed under the MIT License — see `LICENSE` for details.
 
 ---
 
-*For questions, open a GitHub Issue or contact [your email].*
+*For questions, open a GitHub Issue or contact [beyzayim17@gmail.com].*
