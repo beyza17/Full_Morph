@@ -510,7 +510,19 @@ If you use this pipeline in your research, please cite:
 ```
 
 ---
+## References
 
+```bibtex
+@inproceedings{porto2021alpaca,
+  title     = {ALPACA: A fast and accurate computer vision approach for automated landmarking of three-dimensional biological structures},
+  author    = {Porto, A. and others},
+  booktitle = {Methods in Ecology and Evolution},
+  volume    = {12},
+  pages     = {2129--2144},
+  year      = {2021}
+}
+```
+---
 ## License
 
 This project is licensed under the MIT License — see `LICENSE` for details.
