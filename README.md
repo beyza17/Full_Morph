@@ -521,7 +521,16 @@ If you use this pipeline in your research, please cite:
   pages     = {2129--2144},
   year      = {2021}
 }
+@article{isensee2021nnuet,
+  title     = {nnU-Net: A self-configuring method for deep learning-based biomedical image segmentation},
+  author    = {Isensee, F. and others},
+  journal   = {Nature Methods},
+  volume    = {18},
+  pages     = {203--211},
+  year      = {2021}
+}
 ```
+
 ---
 ## License
 
