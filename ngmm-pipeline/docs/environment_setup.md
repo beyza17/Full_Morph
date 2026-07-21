@@ -24,6 +24,38 @@ export nnUNet_results=//path/to/ngmm-pipeline/pipeline_data/nnUNet_results
 
 ## Stage 3 — R
 
+Requires R >= 4.4.0 (tested on R 4.5.2).
+
+Exact package versions — including all transitive dependencies — are 
+pinned in `renv.lock`. To reproduce the exact working environment:
+
+```r
+install.packages("renv")
+renv::restore()
+```
+
+This will install the following direct dependencies at their pinned 
+versions (see `renv.lock` for the complete dependency tree):
+
+| Package     | Version   |
+|-------------|-----------|
+| geomorph    | 4.0.10    |
+| RRPP        | 2.1.2     |
+| tidyverse   | 2.0.0     |
+| jsonlite    | 2.0.0     |
+| ggforce     | 0.5.0     |
+| ggh4x       | 0.3.1     |
+| ggnewscale  | 0.5.2     |
+| MASS        | 7.3-65    |
+| sp          | 2.2-0     |
+| devtools    | 2.4.6     |
+
+### Manual install (not recommended — versions may drift from what was tested)
+
+If you prefer not to use `renv`, you can install packages manually, but 
+compatibility with `geomorph`/`RRPP` is only guaranteed at the pinned 
+versions above:
+
 ```r
 install.packages(c(
   "devtools", "geomorph", "tidyverse", "jsonlite",
@@ -31,7 +63,7 @@ install.packages(c(
 ))
 ```
 
-Tested on R 4.3.2. If `ggh4x` or `ggnewscale` fail to install from CRAN:
+If `ggh4x` or `ggnewscale` fail to install from CRAN:
 ```r
 devtools::install_github("teunbrand/ggh4x")
 devtools::install_github("eliocamp/ggnewscale")
