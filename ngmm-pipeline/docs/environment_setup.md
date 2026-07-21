@@ -15,12 +15,14 @@ export nnUNet_preprocessed=/path/to/ngmm-pipeline/pipeline_data/nnUNet_preproces
 export nnUNet_results=//path/to/ngmm-pipeline/pipeline_data/nnUNet_results
 ```
 
-## Stage 2 — 3D Slicer + ALPACA
+## Stage 2 — Headless Execution (Automated Pipeline)
 
-1. Download [3D Slicer 5.6+](https://download.slicer.org/)
-2. Open Slicer → Extensions Manager → search **SlicerMorph** → install
-3. Restart Slicer
-4. Verify: `Modules → SlicerMorph → ALPACA` is visible
+1. Download [3D Slicer 5.6+](https://download.slicer.org/) 
+2. Instead of pasting code into the Slicer console, the pipeline is now fully automated via the command line.
+
+```bash
+/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
+```
 
 ## Stage 3 — R
 

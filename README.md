@@ -122,19 +122,20 @@ mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output fold
 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section), also it needs GPU 
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
-exec(open("/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py").read())
 # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment. 
+/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
 
 # 6. Prepare template data for ALPACA (see Stage 2)
 cd /path/to/ngmm-pipeline/2_landmark_placement
-huggingface-cli download bzayim/Full_Morph   --include "template_landmarks/**"   --local-dir .
-huggingface-cli download bzayim/Full_Morph   --include "template_model/**"   --local-dir .
+huggingface-cli download bzayim/Full_Morph --include "template_landmarks/**" --local-dir .
+huggingface-cli download bzayim/Full_Morph --include "template_model/**" --local-dir .
 
-# 7. Run ALPACA inside 3D Slicer (It needs SlicerMorph extension, see Stage 2)
-exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read()) # Edit paths inside of the file. Must be run inside 3D Slicer's Python environment
+# 7. Run the complete ALPACA pipeline
+# Edit paths inside of the file. Must be run inside 3D Slicer's Python environment. 
+/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
 
-# 8. Organizing output datas of ALPACA for R analysis (see Stage 3)
-python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py # Edit paths inside of the file.
+# 8. Organize ALPACA outputs for R
+python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py
 
 # 9. Run the R analysis in R terminal(see Stage 3)
 source("/path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R") # Edit paths inside of the file.
@@ -233,19 +234,21 @@ Each `.seg.nrrd` file contains all segmented anatomical regions encoded as integ
 
 ALPACA (Automated Landmarking through Pointcloud Alignment and Correspondence Analysis) transfers landmarks from a template brain to each target brain by:
 
-1. Registering the template surface to the target via RANSAC + ICP
-2. Propagating landmarks using Coherent Point Drift (CPD)
+- Registering the template surface to the target via RANSAC + ICP.
+- Propagating landmarks using Coherent Point Drift (CPD).
 
-This stage has two sub-steps:
+This stage consists of two main sub-steps executed from the command line:
 
-**2a.** Convert `.seg.nrrd` → per-region `.vtk` surface meshes  
-**2b.** Run ALPACA inside 3D Slicer to place landmarks
+1. Convert `.seg.nrrd` segmentations to per-region `.vtk` surface meshes.
+2. Run the ALPACA pipeline headlessly using 3D Slicer's background Python engine.
 
-### 2a — Convert Segmentations to VTK Surfaces
+---
 
-After Stage 1, each sample has a single `.seg.nrrd` file containing all segments. You must extract each region as a separate `.vtk` surface file, organised by region:
+## 2a — Convert Segmentations to VTK Surfaces
 
-```
+After Stage 1, each sample contains a single `.seg.nrrd` file with all segmented regions. Before running ALPACA, each region must be extracted into an individual `.vtk` surface mesh and organized into region-specific directories:
+
+```text
 target_models/
 ├── DG/
 │   ├── NG4975_DG.vtk
@@ -258,71 +261,126 @@ target_models/
     └── ...
 ```
 
-Must be run inside 3D Slicer's Python environment:
+### Executing the Pipeline (Terminal)
+
+Run the pipeline directly from the command line. Slicer launches silently in the background, processes every brain region across all subjects, writes the landmark files, and exits automatically.
+
 ```bash
-exec(open("/path/to/seg_nrrd_to_vtk.py").read())
+/path/to/3dslicer/Slicer \
+  --no-splash \
+  --no-main-window \
+  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py"
 ```
 
-If you see package error, install required package based on "ngmm-pipeline/docs/alpaca_requirements.txt" for Python version 3.12.10. You can install by using this command:
+**How it works**
+
+The script reads `dataset.json` to map integer label IDs to region names (for example, label `3` → `DG`), extracts each segmentation using the marching cubes algorithm, and saves each surface mesh as:
+
+```text
+{REGION_NAME}/{SAMPLE_ID}_{REGION_NAME}.vtk
+```
+
+---
+
+## 2b — Run ALPACA (Headless)
+
+### Prerequisites
+
+Before running the pipeline:
+
+- Install **3D Slicer 5.10.0**.
+- Install the **SlicerMorph** extension (includes ALPACA) via **Extension Manager**, then restart Slicer.
+- Prepare one template model and one landmark file for each brain region:
+
+```text
+2_landmark_placement/
+├── template_model/
+│   ├── DG/
+│   ├── HP/
+│   └── CC/
+└── template_landmarks/
+    ├── DG/
+    ├── HP/
+    └── CC/
+```
+
+(See **Quick Start – Step 6** for template preparation.)
+
+---
+
+## Running the Pipeline
+
+Execute the complete ALPACA workflow from the terminal:
+
+```bash
+/path/to/3dslicer/Slicer \
+  --no-splash \
+  --no-main-window \
+  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
+```
+
+This command:
+
+- Launches Slicer without the graphical interface.
+- Executes the ALPACA pipeline.
+- Automatically exits after processing all regions and subjects.
+
+---
+
+## Installing Dependencies
+
+If required Python packages are missing, install them into Slicer's Python environment (Python 3.12.10).
+
+### From Terminal
+
+```bash
+/path/to/3dslicer/Slicer \
+  --python-code "slicer.util.pip_install('-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt')"
+```
+
+### From Slicer's Python Interactor
 
 ```python
-slicer.util.pip_install("package_name")
+slicer.util.pip_install(
+    "-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt"
+)
 ```
 
-> **How it works:** The script reads `dataset.json` to map integer label IDs to region names (e.g., label `3` → `"DG"`), then marching-cubes extracts each label as a `.vtk` surface mesh and saves it to `{REGION_NAME}/{SAMPLE_ID}_{REGION_NAME}.vtk`.
+---
 
-### 2b — Run ALPACA Inside 3D Slicer
+## Key Parameters
 
-ALPACA must be run inside the 3D Slicer Python environment.
-
-**Prerequisites:**
-1. Install [3D Slicer 5.10.0](https://download.slicer.org/)
-2. Install the **SlicerMorph** extension (includes ALPACA) via Slicer's Extension Manager → Restart Slicer
-3. Prepare one template per region in `path/to/2_landmark_placement/template_model/{REGION}/` and `path/to/2_landmark_placement/template_landmarks/{REGION}/`. Check Quick Start 6th title.
-
-**Running the script:**
-
-1. Open 3D Slicer
-2. Open the Python Interactor (`View → Python Interactor`)
-3. Run:
+Edit the following variables near the top of `run_alpaca_pipeline.py`:
 
 ```python
-exec(open("/path/to/2_landmark_placement/run_alpaca_pipeline.py").read())
+BASE = "/path/to/2_landmark_placement"   # Root directory
+REGION = "DG"                            # Region to process specific region (or loop over regions)
 ```
 
-If you see package error install packages in "ngmm-pipeline/docs/alpaca_requirements.txt" for Python version 3.12.10. You can install by using this command:
+---
 
-```python
-slicer.util.pip_install("-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt")
-```
-
-**Key parameters** (edit at top of `run_alpaca_pipeline.py`):
-
-```python
-BASE   = "/path/to/2_landmark_placement"      # Root directory
-REGION = "DG"                        # Region to process (or loop over regions)
-```
-
-**ALPACA parameters used in this study:**
+## ALPACA Parameters Used in This Study
 
 | Parameter | Value | Description |
-|-----------|-------|-------------|
-| `projectionFactor` | 0.01 | Point projection factor |
-| `pointDensity` | 1.5 | Surface sampling density |
-| `normalSearchRadius` | 2.0 | Normal estimation neighbourhood |
-| `FPFHNeighbors` | 100 | Feature descriptor neighbours |
-| `FPFHSearchRadius` | 5.0 | Feature search radius (mm) |
-| `distanceThreshold` | 3.0 | RANSAC inlier threshold (mm) |
-| `maxRANSAC` | 1,000,000 | Max RANSAC iterations |
-| `ICPDistanceThreshold` | 1.5 | ICP refinement threshold (mm) |
-| `alpha` | 2.0 | CPD regularisation |
-| `beta` | 2.0 | CPD motion coherence |
-| `CPDIterations` | 100 | CPD max iterations |
-| `CPDTolerance` | 0.001 | CPD convergence tolerance |
+|-----------|------:|-------------|
+| projectionFactor | 0.01 | Point projection factor |
+| pointDensity | 1.5 | Surface sampling density |
+| normalSearchRadius | 2.0 | Normal estimation neighbourhood |
+| FPFHNeighbors | 100 | Feature descriptor neighbours |
+| FPFHSearchRadius | 5.0 | Feature search radius (mm) |
+| distanceThreshold | 3.0 | RANSAC inlier threshold (mm) |
+| maxRANSAC | 1,000,000 | Maximum RANSAC iterations |
+| ICPDistanceThreshold | 1.5 | ICP refinement threshold (mm) |
+| alpha | 2.0 | CPD regularisation |
+| beta | 2.0 | CPD motion coherence |
+| CPDIterations | 100 | Maximum CPD iterations |
+| CPDTolerance | 0.001 | CPD convergence tolerance |
 
-### Expected Outputs
+---
 
-```
+## Expected Outputs
+
+```text
 alpaca_run/
 └── output/
     └── DG/
@@ -332,7 +390,40 @@ alpaca_run/
             └── ...
 ```
 
-The script also writes `ALPACA_RMSE_summary.csv` with per-subject RMSE against any available ground-truth landmarks and total runtime.
+The pipeline also generates:
+
+```text
+ALPACA_RMSE_summary.csv
+```
+
+This file contains:
+
+- Per-subject RMSE against any available ground-truth landmarks.
+- Total runtime for each processed subject.
+
+---
+
+## Quick Reference
+
+### Run the complete Stage 2 pipeline
+
+```bash
+/path/to/3dslicer/Slicer \
+  --no-splash \
+  --no-main-window \
+  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 
+``` 
+
+### Install dependencies
+
+```bash
+/path/to/3dslicer/Slicer \
+  --python-code "slicer.util.pip_install('-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt')"
+```
+
+---
+
+## Example Output
 
 <img src="HP.png" alt="HP Region with landmarks on 3D Slicer Software" width="500"/>
 ---
