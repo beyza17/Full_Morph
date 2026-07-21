@@ -178,7 +178,13 @@ Create input folder with the bash command of:
 mkdir -p /path/to/ngmm-pipeline/pipeline_data/processed_files_3
 ```
 
-Place your raw HREM volumes in the `processed_files_3/` folder. Each sample must have a file matching the pattern:
+Place your raw HREM volumes in the `processed_files_3/` folder. 
+
+```bash
+cd /path/to/ngmm-pipeline/pipeline_data
+huggingface-cli download bzayim/Full_Morph   --include "processed_files_3/**"   --local-dir .
+```
+Each sample must have a file matching the pattern:
 
 ```
 {SAMPLE_ID}_RCL5_masked.nrrd
@@ -460,7 +466,7 @@ The `dataset.json` file defines the mapping between integer labels in nnU-Net pr
 
 To reproduce the exact results from the paper:
 
-1. **Obtain the data** — request access to the dataset via [beyzayim17@gmail.com], check "Input Data Requirements" section
+1. **Obtain the data** — available at [HuggingFace link — [here](https://huggingface.co/bzayim/Full_Morph/tree/main/test_set)]
 2. **Download trained model weights** — available at [HuggingFace link — [here](https://huggingface.co/bzayim/Full_Morph/tree/main/Dataset004_first)]
 3. **Place "Dataset004_first" folder with model weights** in `/path/to/ngmm-pipeline/pipeline_data/nnUNet_results`
 
