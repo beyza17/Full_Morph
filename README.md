@@ -269,7 +269,7 @@ Run the pipeline directly from the command line. Slicer launches silently in the
 /path/to/3dslicer/Slicer \
   --no-splash \
   --no-main-window \
-  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py"
+  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
 ```
 
 **How it works**
