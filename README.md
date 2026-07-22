@@ -137,7 +137,7 @@ huggingface-cli download bzayim/Full_Morph --include "template_model/**" --local
 # 8. Organize ALPACA outputs for R
 python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py
 
-# 9. Run the R analysis in R terminal(see Stage 3)
+# 9. Run the R analysis in R terminal, install dependencies with renv lockfile (see Stage 3)
 source("/path/to/ngmm-pipeline/3_morphometrics/gpa_pca_analysis.R") # Edit paths inside of the file.
 ```
 
@@ -224,6 +224,7 @@ segmentation_predictions/
 
 Each `.seg.nrrd` file contains all segmented anatomical regions encoded as integer labels defined in `dataset.json`.
 
+Segmentation prediction output of nnU-Net visualized on 3D Slicer software:
 <img src="thalamus.png" alt="Segmentation prediction output of nnU-Net visualized on 3D Slicer software" width="500"/>
 
 ---
@@ -401,6 +402,7 @@ This file contains:
 ---
 
 ## Example Output
+HP Region with landmarks on 3D Slicer Software:
 
 <img src="HP.png" alt="HP Region with landmarks on 3D Slicer Software" width="500"/>
 ---
@@ -420,6 +422,13 @@ The R script `3_morphometrics/gpa_pca_analysis.R` processes landmark files from 
 - Multi-panel matrix plots (PDF) across all regions
 
 ### Setup
+
+3D_Morph/
+└── renv/
+    └── .gitignore
+    └── activate.R
+    └── settings.json
+└── renv.lock
 
 Requires R >= 4.4.0 (tested on R 4.5.2).
 
@@ -479,7 +488,7 @@ geno_table <- tribble(
 )
 ```
 
-Supported genotype labels: `WT` (wild-type), `HOM` (homozygous), `IT` (heterozygous).
+Supported genotype labels: `WT` (wild-type), `HOM` (homozygous).
 
 ### Running the Analysis
 
@@ -515,6 +524,8 @@ projections_out/
 ├── MATRIX_1_PC1_PC2.pdf             ← All regions: PC1 vs PC2 matrix
 ├── MATRIX_2_BEST_SEPARATION.pdf     ← All regions: best discriminating PCs
 └── MATRIX_2_SIGNIFICANT_HULLS.pdf   ← As above, with convex hulls for sig. regions
+
+MATRIX_2_SIGNIFICANT_HULLS.pdf:
 ```
 <img src="statistics.png" alt="MATRIX_2_SIGNIFICANT_HULLS.pdf" width="500"/>
 
