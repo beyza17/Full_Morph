@@ -123,7 +123,7 @@ mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output fold
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
 # Edit paths inside of the file. Run the command directly from the command line. Slicer launches silently in the background.
-/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
+"/path/to/3dslicer/3D Slicer 5.10.0/Slicer.exe" --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
 
 # 6. Prepare template data for ALPACA (see Stage 2)
 cd /path/to/ngmm-pipeline/2_landmark_placement
@@ -132,7 +132,7 @@ huggingface-cli download bzayim/Full_Morph --include "template_model/**" --local
 
 # 7. Run the complete ALPACA pipeline
 # Edit paths inside of the file. Run the command directly from the command line. Slicer launches silently in the background
-/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
+"/path/to/3dslicer/3D Slicer 5.10.0/Slicer.exe" --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
 
 # 8. Organize ALPACA outputs for R
 python /path/to/ngmm-pipeline/2_landmark_placement/prepare_r_input.py
@@ -267,10 +267,11 @@ target_models/
 Run the pipeline directly from the command line. Slicer launches silently in the background, processes every brain region across all subjects, writes the landmark files, and exits automatically.
 
 ```bash
-/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer \
+"/path/to/3dslicer/3D Slicer 5.10.0/Slicer.exe" \
   --no-splash \
   --no-main-window \
-  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
+  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" \
+  > output.log 2>&1 &
 ```
 
 **How it works**
@@ -321,10 +322,13 @@ slicer.util.pip_install(
 Execute the complete ALPACA workflow from the terminal:
 
 ```bash
-/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer \
+
+"/path/to/3dslicer/3D Slicer 5.10.0/Slicer.exe" \
   --no-splash \
   --no-main-window \
-  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
+  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py" \
+  > output.log 2>&1 &
+
 ```
 
 This command:
@@ -339,8 +343,9 @@ This command:
 ### From Terminal
 
 ```bash
-/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer \
+"/path/to/3dslicer/3D Slicer 5.10.0/Slicer.exe" \
   --python-code "slicer.util.pip_install('-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt')"
+
 ```
 
 
