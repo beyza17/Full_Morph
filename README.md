@@ -267,7 +267,7 @@ target_models/
 Run the pipeline directly from the command line. Slicer launches silently in the background, processes every brain region across all subjects, writes the landmark files, and exits automatically.
 
 ```bash
-/path/to/3dslicer/Slicer \
+/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer \
   --no-splash \
   --no-main-window \
   --python-script "/path/to/ngmm-pipeline/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
@@ -321,7 +321,7 @@ slicer.util.pip_install(
 Execute the complete ALPACA workflow from the terminal:
 
 ```bash
-/path/to/3dslicer/Slicer \
+/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer \
   --no-splash \
   --no-main-window \
   --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
@@ -339,7 +339,7 @@ This command:
 ### From Terminal
 
 ```bash
-/path/to/3dslicer/Slicer \
+/path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer \
   --python-code "slicer.util.pip_install('-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt')"
 ```
 
