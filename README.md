@@ -290,6 +290,13 @@ Before running the pipeline:
 
 - Install **3D Slicer 5.10.0**.
 - Install the **SlicerMorph** extension (includes ALPACA) via **Extension Manager**, then restart Slicer.
+- Install required Python packages into Slicer's Python environment (Python 3.12.10). From Slicer's Python Interactor:
+
+```python
+slicer.util.pip_install(
+    "-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt"
+)
+```
 - Prepare one template model and one landmark file for each brain region:
 
 ```text
@@ -327,9 +334,6 @@ This command:
 
 ---
 
-## Installing Dependencies
-
-If required Python packages are missing, install them into Slicer's Python environment (Python 3.12.10).
 
 ### From Terminal
 
@@ -338,13 +342,6 @@ If required Python packages are missing, install them into Slicer's Python envir
   --python-code "slicer.util.pip_install('-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt')"
 ```
 
-### From Slicer's Python Interactor
-
-```python
-slicer.util.pip_install(
-    "-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt"
-)
-```
 
 ---
 
@@ -354,7 +351,7 @@ Edit the following variables near the top of `run_alpaca_pipeline.py`:
 
 ```python
 BASE = "/path/to/2_landmark_placement"   # Root directory
-REGION = "DG"                            # Region to process specific region (or loop over regions)
+REGION = "DG"                            # Default: None, it loops over all regions (Edit if you process specific region)
 ```
 
 ---
@@ -400,26 +397,6 @@ This file contains:
 
 - Per-subject RMSE against any available ground-truth landmarks.
 - Total runtime for each processed subject.
-
----
-
-## Quick Reference
-
-### Run the complete Stage 2 pipeline
-
-```bash
-/path/to/3dslicer/Slicer \
-  --no-splash \
-  --no-main-window \
-  --python-script "/path/to/ngmm-pipeline/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 
-``` 
-
-### Install dependencies
-
-```bash
-/path/to/3dslicer/Slicer \
-  --python-code "slicer.util.pip_install('-r /path/to/ngmm-pipeline/docs/alpaca_requirements.txt')"
-```
 
 ---
 
