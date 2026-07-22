@@ -422,14 +422,14 @@ The R script `3_morphometrics/gpa_pca_analysis.R` processes landmark files from 
 - Multi-panel matrix plots (PDF) across all regions
 
 ### Setup
-
+```text
 3D_Morph/
 └── renv/
     └── .gitignore
     └── activate.R
     └── settings.json
 └── renv.lock
-
+```
 Requires R >= 4.4.0 (tested on R 4.5.2).
 
 Exact package versions — including all transitive dependencies — are 
