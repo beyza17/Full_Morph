@@ -444,13 +444,32 @@ The R script `3_morphometrics/gpa_pca_analysis.R` processes landmark files from 
 
 ### Setup
 
-Install required R packages (run once):
+Requires R >= 4.4.0 (tested on R 4.5.2).
+
+Exact package versions — including all transitive dependencies — are 
+pinned in `renv.lock`. To reproduce the exact working environment:
 
 ```r
-packages <- c("devtools", "geomorph", "tidyverse", "jsonlite",
-              "ggforce", "sp", "ggh4x", "ggnewscale", "MASS", "RRPP")
-install.packages(packages)
+install.packages("renv")
+renv::restore()
 ```
+
+This will install the following direct dependencies at their pinned 
+versions (see `renv.lock` for the complete dependency tree):
+
+| Package     | Version   |
+|-------------|-----------|
+| geomorph    | 4.0.10    |
+| RRPP        | 2.1.2     |
+| tidyverse   | 2.0.0     |
+| jsonlite    | 2.0.0     |
+| ggforce     | 0.5.0     |
+| ggh4x       | 0.3.1     |
+| ggnewscale  | 0.5.2     |
+| MASS        | 7.3-65    |
+| sp          | 2.2-0     |
+| devtools    | 2.4.6     |
+
 
 ### Input Data Requirements
 
