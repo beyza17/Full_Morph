@@ -122,7 +122,7 @@ mkdir -p /path/to/ngmm-pipeline/pipeline_data/logger # create logger output fold
 1_segmentation/run_segmentation.sh # it needs input files and model weights to be runned (Check "Reproducing Paper Results" section), also it needs GPU 
 
 # 5. Convert segmentations to .vtk for ALPACA (see Stage 2)
-# Edit paths inside of the file. Must be run inside 3D Slicer's Python environment. 
+# Edit paths inside of the file. Run the command directly from the command line. Slicer launches silently in the background.
 /path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/convert_seg_to_vtk/seg_nrrd_to_vtk.py" > output.log 2>&1 &
 
 # 6. Prepare template data for ALPACA (see Stage 2)
@@ -131,7 +131,7 @@ huggingface-cli download bzayim/Full_Morph --include "template_landmarks/**" --l
 huggingface-cli download bzayim/Full_Morph --include "template_model/**" --local-dir .
 
 # 7. Run the complete ALPACA pipeline
-# Edit paths inside of the file. Must be run inside 3D Slicer's Python environment. 
+# Edit paths inside of the file. Run the command directly from the command line. Slicer launches silently in the background
 /path/to/3dslicer/Slicer-5.10.0-linux-amd64/Slicer --no-splash --no-main-window --python-script "/path/to/2_landmark_placement/run_alpaca_pipeline.py" > output.log 2>&1 &
 
 # 8. Organize ALPACA outputs for R
